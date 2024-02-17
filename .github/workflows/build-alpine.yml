@@ -22,13 +22,13 @@ concurrency:
 
 jobs:
   build:
-    uses: Chia-Network/actions/.github/workflows/docker-build.yaml@main
+    uses: Chik-Network/actions/.github/workflows/docker-build.yaml@main
     with:
       alternate-latest-mode: true
       docker-context: "./alpine"
       docker-platforms: linux/amd64
       dockerfile: "./alpine/Dockerfile"
-      dockerhub_imagename: "chianetwork/alpine-builder"
+      dockerhub_imagename: "chiknetwork/alpine-builder"
       image_subpath: "alpine-builder"
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}

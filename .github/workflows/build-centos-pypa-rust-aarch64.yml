@@ -22,7 +22,7 @@ concurrency:
 
 jobs:
   package:
-    uses: Chia-Network/actions/.github/workflows/docker-build.yaml@main
+    uses: Chik-Network/actions/.github/workflows/docker-build.yaml@main
     with:
       docker-platforms: linux/arm64
       docker-context: ./centos-pypa-rust-aarch64

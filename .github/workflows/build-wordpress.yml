@@ -33,7 +33,7 @@ jobs:
           echo "WP_VERSION=$WP_VERSION" >$GITHUB_OUTPUT
 
   build:
-    uses: Chia-Network/actions/.github/workflows/docker-build.yaml@main
+    uses: Chik-Network/actions/.github/workflows/docker-build.yaml@main
     needs:
       - get_version
     with:

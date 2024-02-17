@@ -22,12 +22,12 @@ concurrency:
 
 jobs:
   build:
-    uses: Chia-Network/actions/.github/workflows/docker-build.yaml@main
+    uses: Chik-Network/actions/.github/workflows/docker-build.yaml@main
     with:
       alternate-latest-mode: true
       docker-context: "./rocky8"
       dockerfile: "./rocky8/Dockerfile"
-      dockerhub_imagename: "chianetwork/rocky8-builder"
+      dockerhub_imagename: "chiknetwork/rocky8-builder"
       image_subpath: "rocky8-builder"
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}

@@ -38,5 +38,5 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
     && chown www-data:www-data /var/www/.wp-cli
 
 COPY zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
-COPY php.ini /usr/local/etc/php/conf.d/99-chia-php.ini
+COPY php.ini /usr/local/etc/php/conf.d/99-chik-php.ini
 COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini

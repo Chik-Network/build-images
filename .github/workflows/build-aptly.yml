@@ -22,12 +22,12 @@ concurrency:
 
 jobs:
   build:
-    uses: Chia-Network/actions/.github/workflows/docker-build.yaml@main
+    uses: Chik-Network/actions/.github/workflows/docker-build.yaml@main
     with:
       alternate-latest-mode: true
       docker-context: "./aptly"
       dockerfile: "./aptly/Dockerfile"
-      dockerhub_imagename: "chianetwork/aptly"
+      dockerhub_imagename: "chiknetwork/aptly"
       image_subpath: "aptly"
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}

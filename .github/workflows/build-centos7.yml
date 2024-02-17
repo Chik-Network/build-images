@@ -23,12 +23,12 @@ concurrency:
 
 jobs:
   build:
-    uses: Chia-Network/actions/.github/workflows/docker-build.yaml@main
+    uses: Chik-Network/actions/.github/workflows/docker-build.yaml@main
     with:
       alternate-latest-mode: true
       docker-context: "./centos7"
       dockerfile: "./centos7/Dockerfile"
-      dockerhub_imagename: "chianetwork/centos7-builder"
+      dockerhub_imagename: "chiknetwork/centos7-builder"
       docker-platforms: linux/amd64
       image_subpath: "centos7-builder"
     secrets:
