@@ -42,6 +42,7 @@ RUN apt-get update && \
         vim \
         wget \
         xz-utils \
+        libopenjp2-tools \
         zlib1g-dev && \
     rm -rf /var/lib/apt/lists/*
 
