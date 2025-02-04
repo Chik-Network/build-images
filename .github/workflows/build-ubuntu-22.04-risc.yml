@@ -24,9 +24,10 @@ jobs:
   build:
     uses: Chik-Network/actions/.github/workflows/docker-build.yaml@main
     with:
+      enable-qemu-cache: false
       alternate-latest-mode: true
       #runs-on: k8s-public
-      #timeout-minutes: 1440
+      #timeout-minutes: 240
       docker-context: "./ubuntu-22.04-risc"
       dockerfile: "./ubuntu-22.04-risc/Dockerfile"
       dockerhub_imagename: "chiknetwork/ubuntu-22.04-risc-builder"
