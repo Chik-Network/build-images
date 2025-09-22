@@ -45,6 +45,21 @@ RUN apt-get update && \
         zlib1g-dev && \
     rm -rf /var/lib/apt/lists/*
 
+# electron-builder does not work for arm64 as of Aug 16, 2022.
+# this is a "temporary" fix.  for three plus years.
+# https://github.com/jordansissel/fpm/issues/1801#issuecomment-919877499
+# located here for https://github.com/Chik-Network/chik-blockchain/pull/20037
+RUN apt-get update && \
+    DEBIAN_FRONTEND="noninteractive" apt-get install -y --no-install-recommends \
+        ruby \
+        ruby-dev && \
+    rm -rf /var/lib/apt/lists/* && \
+    sudo gem install fpm && \
+    gem cleanup && \
+    rm -rf $(gem environment cachedir)/*.gem && \
+    find $(gem environment gemdir) -name "*.c" -delete && \
+    find $(gem environment gemdir) -name "*.o" -delete
+
 # Compile newer version of sqlite3 \
 RUN cd ~ && \
     wget -q https://sqlite.org/2022/sqlite-autoconf-3400100.tar.gz && \
@@ -84,4 +99,5 @@ RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | d
     && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
     && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
     && apt update \
-    && apt install gh -y
+    && apt install gh -y \
+    && rm -rf /var/lib/apt/lists/*
