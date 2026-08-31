@@ -26,8 +26,8 @@ jobs:
     with:
       enable-qemu-cache: false
       alternate-latest-mode: true
-      runs-on: k8s-public
-      timeout-minutes: 240
+      runs-on: ubuntu-24.04-arm
+      timeout-minutes: 2400
       docker-context: "./ubuntu-24.04-risc"
       dockerfile: "./ubuntu-24.04-risc/Dockerfile"
       dockerhub_imagename: "chiknetwork/ubuntu-24.04-risc-builder"
