@@ -1,16 +1,16 @@
-name: Build Aptly Image
+name: Build pgBouncer Image
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'aptly/*'
-      - '.github/workflows/build-aptly.yml'
+      - 'pgbouncer/*'
+      - '.github/workflows/build-pgbouncer.yml'
   pull_request:
     paths:
-      - 'aptly/*'
-      - '.github/workflows/build-aptly.yml'
+      - 'pgbouncer/*'
+      - '.github/workflows/build-pgbouncer.yml'
   workflow_dispatch:
   schedule:
     - cron: '30 12 * * 5'
@@ -25,11 +25,11 @@ jobs:
     uses: Chik-Network/actions/.github/workflows/docker-build.yaml@main
     with:
       alternate-latest-mode: true
-      docker-context: "./aptly"
-      dockerfile: "./aptly/Dockerfile"
-      dockerhub_imagename: "chiknetwork/aptly"
-      image_subpath: "aptly"
+      docker-context: "./pgbouncer"
+      dockerfile: "./pgbouncer/Dockerfile"
+      image_subpath: "pgbouncer"
+      additional-tag: "1.25.2"
       push: ${{ github.event_name != 'pull_request' }}
-    secrets:
-      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      DOCKERHUB_PAT: ${{ secrets.DOCKERHUB_PAT }}
+      build-args: |
+        ALPINE_VERSION=3.24.1
+        PGBOUNCER_VERSION=1.25.2

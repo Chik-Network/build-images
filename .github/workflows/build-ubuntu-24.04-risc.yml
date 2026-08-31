@@ -1,16 +1,16 @@
-name: Build Centos 7 Image
+name: Build Ubuntu 24.04 RISC Image
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'centos7/*'
-      - '.github/workflows/build-centos7.yml'
+      - 'ubuntu-24.04-risc/*'
+      - '.github/workflows/build-ubuntu-24.04-risc.yml'
   pull_request:
     paths:
-      - 'centos7/*'
-      - '.github/workflows/build-centos7.yml'
+      - 'ubuntu-24.04-risc/*'
+      - '.github/workflows/build-ubuntu-24.04-risc.yml'
   workflow_dispatch:
   schedule:
     - cron: '30 12 * * 5'
@@ -20,17 +20,20 @@ concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}-${{ github.event_name }}-${{ github.ref == 'refs/heads/main' && github.sha || '' }}
   cancel-in-progress: true
 
-
 jobs:
   build:
     uses: Chik-Network/actions/.github/workflows/docker-build.yaml@main
     with:
+      enable-qemu-cache: false
       alternate-latest-mode: true
-      docker-context: "./centos7"
-      dockerfile: "./centos7/Dockerfile"
-      dockerhub_imagename: "chiknetwork/centos7-builder"
-      docker-platforms: linux/amd64
-      image_subpath: "centos7-builder"
+      runs-on: k8s-public
+      timeout-minutes: 240
+      docker-context: "./ubuntu-24.04-risc"
+      dockerfile: "./ubuntu-24.04-risc/Dockerfile"
+      dockerhub_imagename: "chiknetwork/ubuntu-24.04-risc-builder"
+      docker-platforms: linux/riscv64
+      image_subpath: "ubuntu-24.04-risc-builder"
+      push: ${{ github.event_name != 'pull_request' }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_PAT: ${{ secrets.DOCKERHUB_PAT }}

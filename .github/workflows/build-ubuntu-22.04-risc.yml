@@ -26,13 +26,14 @@ jobs:
     with:
       enable-qemu-cache: false
       alternate-latest-mode: true
-      #runs-on: k8s-public
-      #timeout-minutes: 240
+      runs-on: k8s-public
+      timeout-minutes: 240
       docker-context: "./ubuntu-22.04-risc"
       dockerfile: "./ubuntu-22.04-risc/Dockerfile"
       dockerhub_imagename: "chiknetwork/ubuntu-22.04-risc-builder"
       docker-platforms: linux/riscv64
       image_subpath: "ubuntu-22.04-risc-builder"
+      push: ${{ github.event_name != 'pull_request' }}
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_PAT: ${{ secrets.DOCKERHUB_PAT }}

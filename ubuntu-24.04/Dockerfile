@@ -1,7 +1,7 @@
 # So we can copy yq into our container later
 FROM mikefarah/yq:4 AS yq
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 ENV PYENV_ROOT=/root/.pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
@@ -22,7 +22,6 @@ RUN apt-get update && \
     software-properties-common && \
     add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
     DEBIAN_FRONTEND="noninteractive" apt-get install -y --no-install-recommends \
-    awscli \
     build-essential \
     ca-certificates \
     curl \
@@ -44,12 +43,20 @@ RUN apt-get update && \
     sudo \
     time \
     tk-dev \
+    unzip \
     vim \
     wget \
     xz-utils \
     libopenjp2-tools \
     zlib1g-dev && \
     rm -rf /var/lib/apt/lists/*
+
+# Install awscli
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
+    unzip awscliv2.zip && \
+    ./aws/install && \
+    rm awscliv2.zip && \
+    rm -r ./aws/
 
 # electron-builder does not work for arm64 as of Aug 16, 2022.
 # this is a "temporary" fix.  for three plus years.
@@ -87,7 +94,7 @@ RUN git clone https://github.com/pyenv/pyenv.git ~/.pyenv && \
     python3 -c 'import sys, sqlite3, os; sys.exit(sqlite3.sqlite_version != os.environ["EXPECTED_SQLITE_VERSION"])'
 
 # Add nodejs
-ENV NODE_MAJOR=18
+ENV NODE_MAJOR=22
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list && \
     apt-get update && \
